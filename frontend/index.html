@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume Analyzer | TypeSafe Stage 1 & Groq Stage 2</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1 class="title">RESUME ANALYZER</h1>
+    </header>
+
+    <!-- Configuration & Input Form -->
+    <section class="section form-section">
+      <form id="analyze-form">
+        <div class="form-group">
+          <label for="target-role" class="label">Target Role</label>
+          <select id="target-role" name="target_role" class="select-input">
+            <option value="Junior Backend Developer" selected>Junior Backend Developer</option>
+            <option value="Junior Frontend Developer">Junior Frontend Developer</option>
+            <option value="Junior Full Stack Developer">Junior Full Stack Developer</option>
+            <option value="Junior DevOps Engineer">Junior DevOps Engineer</option>
+            <option value="Junior Data Analyst">Junior Data Analyst</option>
+            <option value="Junior AI/ML Engineer">Junior AI/ML Engineer</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <div class="label-row">
+            <label for="job-description" class="label">Job Description</label>
+            <button type="button" id="load-sample-jd" class="btn-text">Load Amazon SDE-1 JD</button>
+          </div>
+          <textarea id="job-description" name="job_description" rows="7" class="textarea-input" placeholder="Paste target job description here..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="resume-files" class="label">Upload Resumes (PDF / DOC / DOCX)</label>
+          <div class="file-dropzone" id="dropzone">
+            <input type="file" id="resume-files" name="files" multiple accept=".pdf,.docx,.doc,.txt" class="file-input">
+            <div class="dropzone-text">
+              <span class="dropzone-main">Choose PDF, DOC, or DOCX files or drag them here</span>
+              <span id="selected-files-count" class="dropzone-sub">No files selected</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" id="submit-btn" class="btn-primary">Analyze Resumes</button>
+          <span id="status-spinner" class="status-indicator hidden">Analyzing pipeline... please wait</span>
+        </div>
+      </form>
+    </section>
+
+    <!-- Results Section -->
+    <div id="results-area" class="hidden">
+      <!-- Passed Candidates -->
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">FINAL RESULTS</h2>
+          <span class="badge badge-success" id="passed-badge">0 Candidates</span>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table" id="passed-table">
+            <thead>
+              <tr>
+                <th>Candidate</th>
+                <th>Role</th>
+                <th>Match Score</th>
+                <th>Verdict</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="passed-table-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Filtered Candidates -->
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">FILTERED CANDIDATES</h2>
+          <span class="badge badge-neutral" id="filtered-badge">0 Filtered</span>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table" id="filtered-table">
+            <thead>
+              <tr>
+                <th>Candidate</th>
+                <th>Detected Role</th>
+                <th>Reason</th>
+              </tr>
+            </thead>
+            <tbody id="filtered-table-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Errors Section (If Any) -->
+      <section class="section hidden" id="errors-section">
+        <div class="section-header">
+          <h2 class="section-title">PARSE / PROCESSING ERRORS</h2>
+          <span class="badge badge-danger" id="errors-badge">0 Errors</span>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table" id="errors-table">
+            <thead>
+              <tr>
+                <th>File</th>
+                <th>Candidate</th>
+                <th>Error Details</th>
+              </tr>
+            </thead>
+            <tbody id="errors-table-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- Candidate Detail Modal -->
+    <div id="candidate-modal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="modal-candidate-name">Candidate Details</h3>
+          <button type="button" id="modal-close" class="modal-close-btn">&times;</button>
+        </div>
+        <div class="modal-body" id="modal-body">
+          <!-- Populated by script -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
