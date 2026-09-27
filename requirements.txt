@@ -9,3 +9,4 @@ groq>=0.11.0
 pypdf>=5.0.0
 python-docx>=1.1.0
 reportlab>=4.2.0
+olefile>=0.47
